@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import font
+import test
 
 class ResultWindow(tk.Frame):
     def __init__(self, master=None):
