@@ -1,14 +1,16 @@
 import tkinter as tk
 from tkinter import font
+from time import sleep
 
 window = tk.Tk()
 window.resizable(False, False)
 #window.geometry('400x500')
 
 class Application(tk.Frame):
-    eq = int
-    var = int
-    nt = int
+    eq = 0
+    var = 0
+    nt = 0
+    result = 0
 
     def __init__(self, master=window):
         tk.Frame.__init__(self, master)
@@ -22,15 +24,12 @@ class Application(tk.Frame):
         def grab_value(e):
             # Pega o valor da equação
             self.eq = self.input_box.get()
-            print("Equação: {}".format(self.eq))
 
             # Pega o valor da variável
             self.var = self.input_box_2.get()
-            print("Variável: {}".format(self.var))
 
             # Pega o valor do bagulho
             self.nt = self.input_box_3.get()
-            print("Bagulho: {}".format(self.nt))
 
         self.text_g = tk.Label(self, text="Bagulho")
         self.text_g.grid(column=0, row=1)
@@ -57,6 +56,15 @@ class Application(tk.Frame):
     # Aqui a gente realiza o cálculo
     def calcular(self):
         print('Estou calculando...')
+        sleep(1)
+
+        int(self.eq)
+        int(self.var)
+        int(self.nt)
+        
+        self.result = int(int(self.eq) + int(self.var)) + int(self.nt)
+        print(self.result)
+        return self.result
 
     def createWidgets(self):
 
