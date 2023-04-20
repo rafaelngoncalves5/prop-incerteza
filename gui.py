@@ -6,6 +6,18 @@ window = tk.Tk()
 window.resizable(False, False)
 #window.geometry('400x500')
 
+class ResultWindow(tk.Frame):
+    result = float
+    def __init__(self, master=window, result=result):
+        self.result = result
+        tk.Frame.__init__(self, master) 
+        self.grid()
+        self.createWidgets()
+
+    def createWidgets(self):
+        self.titulo_result = tk.Label(self, text='Resultado: {}'.format(str(self.result)))
+        self.titulo_result.grid()
+
 count = 2
 
 class Application(tk.Frame):
@@ -23,14 +35,17 @@ class Application(tk.Frame):
         global count
         count += 1  
 
-        self.input_box = tk.Entry(self, bd=5)
-        self.input_box.grid(column=0, row=count, padx=20)     
+        self.eq_input = tk.Entry(self, bd=5)
+        self.eq_input.grid(column=0, row=count, padx=20)     
 
-        self.input_box_2 = tk.Entry(self, bd=5)
-        self.input_box_2.grid(column=1, row=count, padx=20)
+        self.var_input = tk.Entry(self, bd=5)
+        self.var_input.grid(column=1, row=count, padx=20)
         
-        self.input_box_3 = tk.Entry(self, bd=5)
-        self.input_box_3.grid(column=2, row=count, padx=20)
+        self.stuff_input = tk.Entry(self, bd=5)
+        self.stuff_input.grid(column=2, row=count, padx=20)
+
+        # Adiciona numa DS pra realizar os cálculos
+        # ...
 
     # Aqui a gente realiza o cálculo
     def calcular(self):
@@ -39,27 +54,38 @@ class Application(tk.Frame):
         
         self.result = 0
         print(self.result)
+
+        # Abre a janela de resultado
+        result_window = ResultWindow(result=self.result)
+        result_window.master.title('Resultado')
+        result_window.mainloop()
+
         return self.result
 
     def createWidgets(self):
 
-        self.text_g = tk.Label(self, text="Bagulho")
-        self.text_g.grid(column=0, row=1)
-        self.input_box = tk.Entry(self, bd=5)
-        self.input_box.grid(column=0, row=2, padx=20)     
-
-        self.text_g_2 = tk.Label(self, text="Bagulho")
-        self.text_g_2.grid(column=1, row=1)
-        self.input_box_2 = tk.Entry(self, bd=5)
-        self.input_box_2.grid(column=1, row=2, padx=20)
-        
-        self.text_g_2 = tk.Label(self, text="Bagulho")
-        self.text_g_2.grid(column=2, row=1)
-        self.input_box_3 = tk.Entry(self, bd=5)
-        self.input_box_3.grid(column=2, row=2, padx=20)
-
         self.titulo = tk.Label(self, text="Prop incerteza", font=('Courier', 15, 'bold'))
         self.titulo.grid(column=1, row=0, pady=30)
+
+        self.add_input_btn = tk.Button(self, text="+", background='green', 
+                                      command=self.create_input, font=("Courier", 8, 'bold'), fg='white', 
+                                      relief='flat')
+        self.add_input_btn.grid(column=2, row=0)
+
+        self.eq_text = tk.Label(self, text="Equação")
+        self.eq_text.grid(column=0, row=1)
+        self.eq_input = tk.Entry(self, bd=5)
+        self.eq_input.grid(column=0, row=2, padx=20)     
+
+        self.var_text = tk.Label(self, text="Variável")
+        self.var_text.grid(column=1, row=1)
+        self.var_input = tk.Entry(self, bd=5)
+        self.var_input.grid(column=1, row=2, padx=20)
+        
+        self.stuff_text = tk.Label(self, text="Stuff")
+        self.stuff_text.grid(column=2, row=1)
+        self.stuff_input = tk.Entry(self, bd=5)
+        self.stuff_input.grid(column=2, row=2, padx=20)
 
         self.calcular_btn = tk.Button(self, text="Calcular", background='blue', 
                                       command=self.calcular, font=("Courier", 16, 'bold'), fg='white', 
