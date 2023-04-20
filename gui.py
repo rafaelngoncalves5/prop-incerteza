@@ -2,23 +2,37 @@ import tkinter as tk
 from tkinter import font
 from time import sleep
 
-window = tk.Tk()
-window.resizable(False, False)
-#window.geometry('400x500')
-
 class ResultWindow(tk.Frame):
-    result = float
-    def __init__(self, master=window, result=result):
+    result = str
+    stuff_code = str
+
+    def __init__(self, master=None, result=result, stuff_code = stuff_code):
         self.result = result
-        tk.Frame.__init__(self, master) 
+        self.stuff_code = stuff_code
+        tk.Frame.__init__(self, master, background='grey') 
         self.grid()
         self.createWidgets()
 
     def createWidgets(self):
-        self.titulo_result = tk.Label(self, text='Resultado: {}'.format(str(self.result)))
-        self.titulo_result.grid()
+        self.titulo_result = tk.Label(self, foreground='white', background='grey', text="Resultado", font=('Courier', 15, 'bold'))
+        self.titulo_result.grid(column=1, row=0, pady=30)
+
+        self.show_result = tk.Label(self, text=str(self.result), font=('Courier', 12, 'bold'), 
+                                    background='cyan', padx=20, pady=20)
+        self.show_result.grid(column=1, row=1)
+
+        self.titulo_stuff_code = tk.Label(self, foreground='white', background='grey', text="Stuff code", font=('Courier', 15, 'bold'))
+        self.titulo_stuff_code.grid(column=1, row=2, pady=30)
+
+        self.show_stuff_code = tk.Label(self, text=str(self.result), font=('Courier', 12, 'bold'), 
+                                    background='orange', padx=20, pady=20)
+        self.show_stuff_code.grid(column=1, row=3)
 
 count = 2
+
+window = tk.Tk()
+window.resizable(False, False)
+#window.geometry('400x500')
 
 class Application(tk.Frame):
 
@@ -52,15 +66,18 @@ class Application(tk.Frame):
         print('Estou calculando...')
         sleep(1)
         
-        self.result = 0
-        print(self.result)
+        self.result = 'dsf32423423942034023042dvbv453443dsfsd343423tvb'
+
+        self.stuff_code = 'dfinsdkfnsdfngfkfgn'
 
         # Abre a janela de resultado
-        result_window = ResultWindow(result=self.result)
+        res_window = tk.Tk()
+        res_window.resizable(False, False)
+        result_window = ResultWindow(master=res_window, result=self.result, stuff_code=self.stuff_code)
         result_window.master.title('Resultado')
         result_window.mainloop()
 
-        return self.result
+        return self.result + self.stuff_code
 
     def createWidgets(self):
 
