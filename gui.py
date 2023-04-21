@@ -2,6 +2,16 @@ import tkinter as tk
 from tkinter import font
 from time import sleep
 
+var_list = list()
+val_list = list()
+inc_list = list()
+
+def calcular(equation, **kwargs):
+    # Pegando a equação. Só existe uma equação
+    print(equation)
+    # Variáveis(var), valores(val) e incertezas(inc)
+    print(kwargs)
+
 class ResultWindow(tk.Frame):
     result = str
     latex = str
@@ -47,36 +57,34 @@ class Application(tk.Frame):
     def create_input(self):
 
         global count
-        count += 1  
+        count += 1
 
-        self.var_input = tk.Entry(self, bd=5)
-        self.var_input.grid(column=0, row=count, padx=20)     
+        if count <= 17:
+            tk.Entry(self, bd=5).grid(column=0, row=count, padx=20)
 
-        self.val_input = tk.Entry(self, bd=5)
-        self.val_input.grid(column=1, row=count, padx=20)
+            tk.Entry(self, bd=5).grid(column=1, row=count, padx=20)
         
-        self.inc_input = tk.Entry(self, bd=5)
-        self.inc_input.grid(column=2, row=count, padx=20)
-
-        # Adiciona numa DS pra realizar os cálculos
-        # ...
-
+            tk.Entry(self, bd=5).grid(column=2, row=count, padx=20)
+        
     # Aqui a gente realiza o cálculo
-    def calcular(self):
+    def grab_value(self):
 
-        
+        # Insere na lista de variáveis
+        var_list.append(self.var_input.get())
+
+        # Insere na lista de valores
+        val_list.append(self.val_input.get())
+
+        # Insere na lista de incertezas
+        inc_list.append(self.inc_input.get())
 
         # Realiza o cálculo em si:
-        # ...
-        
-
-
-
-
-
-
-
-
+        calcular(
+            equation=self.eq_input.get(),
+            var=var_list, 
+            val=val_list,
+            inc=inc_list,
+            )
 
         # Retorna o resultado
         self.result = 'dsf32423423942034023042dvbv453443dsfsd343423tvb'
@@ -90,13 +98,9 @@ class Application(tk.Frame):
         result_window.master.title('Resultado')
         result_window.mainloop()
 
-        return self.result + self.latex
+        # return self.result + self.latex
 
     def createWidgets(self):
-        # Só existe uma equação:            
-        def grab_value(e, *args):
-            # Pegando a equação
-            equation = self.eq_input.get()
 
         self.titulo = tk.Label(self, text="Prop incerteza", font=('Courier', 15, 'bold'))
         self.titulo.grid(column=1, row=0, pady=30)
@@ -104,7 +108,6 @@ class Application(tk.Frame):
         self.eq_text = tk.Label(self, text="Equação", font=('Courier', 12)).grid(column=1, row=1)
         self.eq_input = tk.Entry(self, bd=5)
         self.eq_input.grid(column=1, row=2)
-        self.eq_input.bind('<Key>', grab_value)
 
         self.add_input_btn = tk.Button(self, text="+", background='green', 
                                       command=self.create_input, fg='white', 
@@ -127,7 +130,7 @@ class Application(tk.Frame):
         self.inc_input.grid(column=2, row=4, padx=20)
 
         self.calcular_btn = tk.Button(self, text="Calcular", background='blue', 
-                                      command=self.calcular, font=("Courier", 16, 'bold'), fg='white', 
+                                      command=self.grab_value, font=("Courier", 16, 'bold'), fg='white', 
                                       relief='raised')
         self.calcular_btn.grid(column=1, row=40, pady=40)
 
