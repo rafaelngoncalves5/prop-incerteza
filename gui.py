@@ -16,6 +16,31 @@ def calcular(equation, **kwargs):
     # Variáveis(var), valores(val) e incertezas(inc)
     print(kwargs)
 
+    # REALIZE O CÁLCULO AQUI, CÉSAR!!!!!!!!!
+    '''
+    - EQUAÇÃO -> equation
+    - VALORES -> val_list
+    - VARIÁVEIS -> var_list
+    - INCERTEZAS -> inc_list
+    '''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # FIM
+
     # Limpa a lista
     var_list.clear()
     val_list.clear()
