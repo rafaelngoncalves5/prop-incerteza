@@ -50,6 +50,9 @@ def calcular(equation, latex, **kwargs):
     result = 'Aqui você envia o resultado do cálculo, japoneix'
     latex_result = 'Aqui você envia o resultado do latex, japoneix'
 
+    if latex_result == 'None' or latex_result == '' or latex_result == ' ':
+        latex_result = "Você não providenciou o latex!"
+
     # Abre a janela de resultado
     res_window = tk.Tk()
     res_window.resizable(False, False)
@@ -137,7 +140,7 @@ class Application(tk.Frame):
             )
     # Tutorial do spray
     def show_info_box(self):
-        messagebox.showinfo('Como calcular?', "1 - Inserir a equação na caixa de 'equação'\n 2 - Inserir as variáveis, valores e incertezas em suas respectivas caixas\n 3 - para adicionar mais campos de variáveis, valores e incertezas, aperte o botão '+' (verde)\n 4 - Opcionalmente, adicione o símbolo do latex na caixa 'latex'\n 5 - Aperte o botão calcular (azul)")
+        messagebox.showinfo('Como calcular?', "1 - Inserir a equação na caixa de 'Equação'\n2 - Inserir as 'Variáveis', 'Valores' e 'Incertezas' em suas respectivas caixas\n3 - Para adicionar mais campos de 'Variáveis', 'Valores' e 'Incertezas', aperte o botão '+' (verde)\n4 - Opcionalmente, adicione o símbolo do latex na caixa 'latex'\n5 - Aperte o botão 'Calcular' (azul)")
 
     def create_input(self):
         global count
@@ -155,7 +158,6 @@ class Application(tk.Frame):
         svar_list.append(self.var1)
         sval_list.append(self.val1)
         sinc_list.append(self.inc1)
-
 
     def createWidgets(self):
 
