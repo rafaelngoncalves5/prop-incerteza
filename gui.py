@@ -12,15 +12,18 @@ sinc_list = list()
 
 def calcular(equation, latex, **kwargs):
     # Pegando a equação. Só existe uma equação
-    print(equation)
+    # print('Equação: ', equation)
     # Variáveis(var), valores(val) e incertezas(inc)
-    print(kwargs)
+    # print("Variáveis, valores e incertezas: ", kwargs)
     # Símbolo do latex
-    print(latex)
+    # print("Latex: ", latex)
 
     # REALIZE O CÁLCULO AQUI, CÉSAR!!!!!!!!!
     '''
     - EQUAÇÃO -> equation
+    - Latex -> latex
+
+    Os valores das listas são os *kwargs!
     - VALORES -> val_list
     - VARIÁVEIS -> var_list
     - INCERTEZAS -> inc_list
@@ -44,12 +47,13 @@ def calcular(equation, latex, **kwargs):
     # FIM
 
     # Retorna o resultado
-    result = 'esse e o resultado'
+    result = 'Aqui você envia o resultado do cálculo, japoneix'
+    latex_result = 'Aqui você envia o resultado do latex, japoneix'
 
     # Abre a janela de resultado
     res_window = tk.Tk()
     res_window.resizable(False, False)
-    result_window = ResultWindow(master=res_window, result=result, latex=latex)
+    result_window = ResultWindow(master=res_window, result=result, latex=latex_result)
     result_window.master.title('Resultado')
     result_window.mainloop()
 
@@ -72,6 +76,7 @@ class ResultWindow(tk.Frame):
         self.createWidgets()
 
     def createWidgets(self):
+
         self.titulo_result = tk.Label(self, foreground='white', background='grey', text="Resultado", font=('Courier', 15, 'bold'))
         self.titulo_result.grid(column=1, row=0, pady=30)
 
@@ -90,7 +95,7 @@ count = 5
 
 window = tk.Tk()
 window.resizable(False, False)
-#window.geometry('400x500')
+# window.geometry('400x500')
 
 class Application(tk.Frame):
 
@@ -130,19 +135,21 @@ class Application(tk.Frame):
             val=val_list,
             inc=inc_list,
             )
-
+    # Tutorial do spray
+    def show_info_box(self):
+        messagebox.showinfo('Como calcular?', "1 - Inserir a equação na caixa de 'equação'\n 2 - Inserir as variáveis, valores e incertezas em suas respectivas caixas\n 3 - para adicionar mais campos de variáveis, valores e incertezas, aperte o botão '+' (verde)\n 4 - Opcionalmente, adicione o símbolo do latex na caixa 'latex'\n 5 - Aperte o botão calcular (azul)")
 
     def create_input(self):
         global count
         count += 1
          
-        self.var1 = tk.Entry(self, bd=5)
+        self.var1 = tk.Entry(self, bd=5, cursor='pencil')
         self.var1.grid(column=0, row=count, padx=20)
 
-        self.val1 = tk.Entry(self,bd=5)
+        self.val1 = tk.Entry(self,bd=5, cursor='pencil')
         self.val1.grid(column=1, row=count)
 
-        self.inc1 = tk.Entry(self,bd=5)
+        self.inc1 = tk.Entry(self,bd=5, cursor='pencil')
         self.inc1.grid(column=2, row=count)
 
         svar_list.append(self.var1)
@@ -155,37 +162,43 @@ class Application(tk.Frame):
         self.titulo = tk.Label(self, text="Prop incerteza", font=('Courier', 15, 'bold'))
         self.titulo.grid(column=1, row=0, pady=30)
 
+        self.info_icon = tk.Button(
+            self, text="?", 
+            command=self.show_info_box, fg='black', 
+            relief='flat', font=('Helvetica', 12, 'bold', 'underline'), cursor='x_cursor'
+        ).grid(column=2, row=0)
+
         self.latex_titulo = tk.Label(self, text="Latex", font=('Courier', 12)).grid(column=2, row=1)
-        self.latex = tk.Entry(self, bd=5)
+        self.latex = tk.Entry(self, bd=5, cursor='pencil')
         self.latex.grid(column=2, row=2)
 
         self.eq_text = tk.Label(self, text="Equação", font=('Courier', 12)).grid(column=1, row=1)
-        self.eq_input = tk.Entry(self, bd=5)
+        self.eq_input = tk.Entry(self, bd=5, cursor='pencil')
         self.eq_input.grid(column=1, row=2)
 
         self.add_input_btn = tk.Button(self, text="+", background='green', 
                                       command=self.create_input, fg='white', 
-                                      relief='flat', padx=5)
+                                      relief='flat', padx=5, cursor='x_cursor')
         self.add_input_btn.grid(column=1, row=39)
 
         self.var_text = tk.Label(self, text="Variável")
         self.var_text.grid(column=0, row=3)
-        self.var_input = tk.Entry(self, bd=5)
+        self.var_input = tk.Entry(self, bd=5, cursor='pencil')
         self.var_input.grid(column=0, row=4, padx=20)
 
         self.val_text = tk.Label(self, text="Valor")
         self.val_text.grid(column=1, row=3)
-        self.val_input = tk.Entry(self, bd=5)
+        self.val_input = tk.Entry(self, bd=5, cursor='pencil')
         self.val_input.grid(column=1, row=4, padx=20)
         
         self.inc_text = tk.Label(self, text="Incerteza")
         self.inc_text.grid(column=2, row=3)
-        self.inc_input = tk.Entry(self, bd=5)
+        self.inc_input = tk.Entry(self, bd=5, cursor='pencil')
         self.inc_input.grid(column=2, row=4, padx=20)
 
         self.calcular_btn = tk.Button(self, text="Calcular", background='blue', 
                                       command=self.grab_value, font=("Courier", 16, 'bold'), fg='white', 
-                                      relief='raised')
+                                      relief='raised', cursor='x_cursor')
         self.calcular_btn.grid(column=1, row=40, pady=40)
 
 app = Application()  
