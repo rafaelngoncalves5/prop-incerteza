@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import font
+from tkinter import font, messagebox
 from time import sleep
 
 var_list = list()
@@ -10,11 +10,13 @@ svar_list = list()
 sval_list = list()
 sinc_list = list()
 
-def calcular(equation, **kwargs):
+def calcular(equation, latex, **kwargs):
     # Pegando a equação. Só existe uma equação
     print(equation)
     # Variáveis(var), valores(val) e incertezas(inc)
     print(kwargs)
+    # Símbolo do latex
+    print(latex)
 
     # REALIZE O CÁLCULO AQUI, CÉSAR!!!!!!!!!
     '''
@@ -40,6 +42,18 @@ def calcular(equation, **kwargs):
 
 
     # FIM
+
+    # Retorna o resultado
+    result = 'esse e o resultado'
+
+    # Abre a janela de resultado
+    res_window = tk.Tk()
+    res_window.resizable(False, False)
+    result_window = ResultWindow(master=res_window, result=result, latex=latex)
+    result_window.master.title('Resultado')
+    result_window.mainloop()
+
+    # return self.result + self.latex
 
     # Limpa a lista
     var_list.clear()
@@ -68,7 +82,7 @@ class ResultWindow(tk.Frame):
         self.titulo_latex = tk.Label(self, foreground='white', background='grey', text="Latex", font=('Courier', 15, 'bold'))
         self.titulo_latex.grid(column=1, row=2, pady=30)
 
-        self.show_latex = tk.Label(self, text=str(self.result), font=('Courier', 12, 'bold'), 
+        self.show_latex = tk.Label(self, text=str(self.latex), font=('Courier', 12, 'bold'), 
                                     background='orange', padx=20, pady=20)
         self.show_latex.grid(column=1, row=3)
 
@@ -111,24 +125,12 @@ class Application(tk.Frame):
         # Realiza o cálculo em si:
         calcular(
             equation=self.eq_input.get(),
+            latex=self.latex.get(),
             var=var_list, 
             val=val_list,
             inc=inc_list,
             )
 
-        # Retorna o resultado
-        self.result = 'dsf32423423942034023042dvbv453443dsfsd343423tvb'
-
-        self.latex = 'dfinsdkfnsdfngfkfgn'
-
-        # Abre a janela de resultado
-        res_window = tk.Tk()
-        res_window.resizable(False, False)
-        result_window = ResultWindow(master=res_window, result=self.result, latex=self.latex)
-        result_window.master.title('Resultado')
-        result_window.mainloop()
-
-        # return self.result + self.latex
 
     def create_input(self):
         global count
@@ -152,6 +154,10 @@ class Application(tk.Frame):
 
         self.titulo = tk.Label(self, text="Prop incerteza", font=('Courier', 15, 'bold'))
         self.titulo.grid(column=1, row=0, pady=30)
+
+        self.latex_titulo = tk.Label(self, text="Latex", font=('Courier', 12)).grid(column=2, row=1)
+        self.latex = tk.Entry(self, bd=5)
+        self.latex.grid(column=2, row=2)
 
         self.eq_text = tk.Label(self, text="Equação", font=('Courier', 12)).grid(column=1, row=1)
         self.eq_input = tk.Entry(self, bd=5)
