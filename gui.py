@@ -12,11 +12,11 @@ sinc_list = list()
 
 def calcular(equation, latex, **kwargs):
     # Pegando a equação. Só existe uma equação
-    # print('Equação: ', equation)
+    print('Equação: ', equation)
     # Variáveis(var), valores(val) e incertezas(inc)
-    # print("Variáveis, valores e incertezas: ", kwargs)
+    print("Variáveis, valores e incertezas: ", kwargs)
     # Símbolo do latex
-    # print("Latex: ", latex)
+    print("Latex: ", latex)
 
     # REALIZE O CÁLCULO AQUI, CÉSAR!!!!!!!!!
     '''
@@ -50,8 +50,11 @@ def calcular(equation, latex, **kwargs):
     result = 'Aqui você envia o resultado do cálculo, japoneix'
     latex_result = 'Aqui você envia o resultado do latex, japoneix'
 
-    if latex_result == 'None' or latex_result == '' or latex_result == ' ':
+    if latex_result == None or latex_result == '' or latex_result == ' ':
         latex_result = "Você não providenciou o latex!"
+
+    # Finaliza o processo
+    window.destroy()
 
     # Abre a janela de resultado
     res_window = tk.Tk()
@@ -59,13 +62,6 @@ def calcular(equation, latex, **kwargs):
     result_window = ResultWindow(master=res_window, result=result, latex=latex_result)
     result_window.master.title('Resultado')
     result_window.mainloop()
-
-    # return self.result + self.latex
-
-    # Limpa a lista
-    var_list.clear()
-    val_list.clear()
-    inc_list.clear()
 
 class ResultWindow(tk.Frame):
     result = str
@@ -109,35 +105,43 @@ class Application(tk.Frame):
         # Tem de chamar esse método pra funcionar o width e o height do Frame
         # self.grid_propagate(False)
 
-    def grab_value(self):
+    def main(self):
 
-        # Insere na lista de variáveis
-        var_list.append(self.var_input.get())
+        if self.eq_input.get() == None or self.eq_input.get() == '' or self.eq_input.get() == ' ':
+            messagebox.showerror('Erro', 'Sua equação está incompleta!')
 
-        # Insere na lista de valores
-        val_list.append(self.val_input.get())
+        elif self.val_input == None or self.val_input.get() == '' or self.val_input.get() == ' ' or  self.var_input == None or self.var_input.get() == '' or self.var_input.get() == ' ' or  self.inc_input == None or self.inc_input.get() == '' or self.inc_input.get() == ' ' :
+            messagebox.showerror('Erro', "Dados inválidos, verifique os campos de 'Variáveis', 'Valores' e 'Incertezas'!")
 
-        # Insere na lista de incertezas
-        inc_list.append(self.inc_input.get())
+        else:
+            # Insere na lista de variáveis
+            var_list.append(self.var_input.get())
+
+            # Insere na lista de valores
+            val_list.append(self.val_input.get())
+
+            # Insere na lista de incertezas
+            inc_list.append(self.inc_input.get())
         
-        # Salva tudo
-        for variable in svar_list:
-            var_list.append(variable.get())
+            # Salva tudo
+            for variable in svar_list:
+                var_list.append(variable.get())
 
-        for value in sval_list:
-            val_list.append(value.get())
+            for value in sval_list:
+                val_list.append(value.get())
 
-        for uncertainty in sinc_list:
-            inc_list.append(uncertainty.get())
+            for uncertainty in sinc_list:
+                inc_list.append(uncertainty.get())
 
-        # Realiza o cálculo em si:
-        calcular(
-            equation=self.eq_input.get(),
-            latex=self.latex.get(),
-            var=var_list, 
-            val=val_list,
-            inc=inc_list,
-            )
+            # Realiza o cálculo em si:
+            calcular(
+                equation=self.eq_input.get(),
+                latex=self.latex.get(),
+                var=var_list, 
+                val=val_list,
+                inc=inc_list,
+                )
+
     # Tutorial do spray
     def show_info_box(self):
         messagebox.showinfo('Como calcular?', "1 - Inserir a equação na caixa de 'Equação'\n2 - Inserir as 'Variáveis', 'Valores' e 'Incertezas' em suas respectivas caixas\n3 - Para adicionar mais campos de 'Variáveis', 'Valores' e 'Incertezas', aperte o botão '+' (verde)\n4 - Opcionalmente, adicione o símbolo do latex na caixa 'latex'\n5 - Aperte o botão 'Calcular' (azul)")
@@ -199,7 +203,7 @@ class Application(tk.Frame):
         self.inc_input.grid(column=2, row=4, padx=20)
 
         self.calcular_btn = tk.Button(self, text="Calcular", background='blue', 
-                                      command=self.grab_value, font=("Courier", 16, 'bold'), fg='white', 
+                                      command=self.main, font=("Courier", 16, 'bold'), fg='white', 
                                       relief='raised', cursor='x_cursor')
         self.calcular_btn.grid(column=1, row=40, pady=40)
 
