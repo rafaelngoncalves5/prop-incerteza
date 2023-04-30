@@ -23,7 +23,6 @@ def calcular(equation, latex, **kwargs):
     - EQUAÇÃO -> equation
     - Latex -> latex
 
-    Os valores das listas são os *kwargs!
     - VALORES -> val_list
     - VARIÁVEIS -> var_list
     - INCERTEZAS -> inc_list
@@ -59,17 +58,30 @@ def calcular(equation, latex, **kwargs):
     # Abre a janela de resultado
     res_window = tk.Tk()
     res_window.resizable(False, False)
-    result_window = ResultWindow(master=res_window, result=result, latex=latex_result)
+    result_window = ResultWindow(master=res_window, result=result, latex=latex_result, equacao=equation, valores=val_list, variaveis=var_list, incertezas=inc_list)
     result_window.master.title('Resultado')
     result_window.mainloop()
 
 class ResultWindow(tk.Frame):
     result = str
     latex = str
+    equacao = str
+    
+    # Conjuntos
+    variaveis = list
+    valores = list
+    incertezas = list
 
-    def __init__(self, master=None, result=result, latex = latex):
+    def __init__(self, master=None, result=result, latex=latex, equacao=equacao, variaveis=variaveis, valores=valores, incertezas=incertezas):
         self.result = result
         self.latex = latex
+        self.equacao = equacao
+
+        # Conjuntos
+        self.variaveis = variaveis
+        self.valores = valores
+        self.incertezas = incertezas
+
         tk.Frame.__init__(self, master, background='grey') 
         self.grid()
         self.createWidgets()
@@ -79,16 +91,23 @@ class ResultWindow(tk.Frame):
         self.titulo_result = tk.Label(self, foreground='white', background='grey', text="Resultado", font=('Courier', 15, 'bold'))
         self.titulo_result.grid(column=1, row=0, pady=30)
 
-        self.show_result = tk.Label(self, text=str(self.result), font=('Courier', 12, 'bold'), 
+        self.show_result = tk.Label(self, text=str(self.result), 
                                     background='cyan', padx=20, pady=20)
         self.show_result.grid(column=1, row=1)
 
         self.titulo_latex = tk.Label(self, foreground='white', background='grey', text="Latex", font=('Courier', 15, 'bold'))
         self.titulo_latex.grid(column=1, row=2, pady=30)
 
-        self.show_latex = tk.Label(self, text=str(self.latex), font=('Courier', 12, 'bold'), 
+        self.show_latex = tk.Label(self, text=str(self.latex), 
                                     background='orange', padx=20, pady=20)
         self.show_latex.grid(column=1, row=3)
+
+        self.titulo_dados = tk.Label(self, foreground='white', background='grey', text="Dados inseridos", font=('Courier', 15, 'bold')).grid(column=1, row=4, pady=30)
+
+        msg = f"Equação: {self.equacao}.\n\nLatex: {self.latex}.\n\nValores: {self.valores}.\n\nVariáveis {self.variaveis}.\n\nIncertezas {self.incertezas}"
+        
+        self.show_dados = tk.Label(self, text=msg, background='black', foreground='white')
+        self.show_dados.grid(column=1, row=5)
 
 count = 5
 
@@ -112,7 +131,7 @@ class Application(tk.Frame):
 
         elif self.val_input == None or self.val_input.get() == '' or self.val_input.get() == ' ' or  self.var_input == None or self.var_input.get() == '' or self.var_input.get() == ' ' or  self.inc_input == None or self.inc_input.get() == '' or self.inc_input.get() == ' ' :
             messagebox.showerror('Erro', "Dados inválidos, verifique os campos de 'Variáveis', 'Valores' e 'Incertezas'!")
-
+        
         else:
             # Insere na lista de variáveis
             var_list.append(self.var_input.get())
