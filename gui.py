@@ -59,17 +59,30 @@ def calcular(equation, latex, **kwargs):
     # Abre a janela de resultado
     res_window = tk.Tk()
     res_window.resizable(False, False)
-    result_window = ResultWindow(master=res_window, result=result, latex=latex_result)
+    result_window = ResultWindow(master=res_window, result=result, latex=latex_result, equacao=equation, valores=val_list, variaveis=var_list, incertezas=inc_list)
     result_window.master.title('Resultado')
     result_window.mainloop()
 
 class ResultWindow(tk.Frame):
     result = str
     latex = str
+    equacao = str
+    
+    # Conjuntos
+    variaveis = list
+    valores = list
+    incertezas = list
 
-    def __init__(self, master=None, result=result, latex = latex):
+    def __init__(self, master=None, result=result, latex=latex, equacao=equacao, variaveis=variaveis, valores=valores, incertezas=incertezas):
         self.result = result
         self.latex = latex
+        self.equacao = equacao
+
+        # Conjuntos
+        self.variaveis = variaveis
+        self.valores = valores
+        self.incertezas = incertezas
+
         tk.Frame.__init__(self, master, background='grey') 
         self.grid()
         self.createWidgets()
@@ -89,6 +102,11 @@ class ResultWindow(tk.Frame):
         self.show_latex = tk.Label(self, text=str(self.latex), font=('Courier', 12, 'bold'), 
                                     background='orange', padx=20, pady=20)
         self.show_latex.grid(column=1, row=3)
+
+        self.titulo_dados = tk.Label(self, foreground='white', background='grey', text="Dados inseridos", font=('Courier', 15, 'bold')).grid(column=1, row=4, pady=30)
+
+        self.show_dados = tk.Text(self, text=str(f"Equação: {self.equacao}. Latex: {self.latex}. Valores: {self.valores}. Variáveis {self.variaveis}. Incertezas {self.incertezas}"), 
+                                    background='black', foreground='white', padx=20, pady=20).grid(column=1, row=5)
 
 count = 5
 
