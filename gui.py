@@ -163,6 +163,19 @@ class Application(tk.Frame):
         sval_list.append(self.val1)
         sinc_list.append(self.inc1)
 
+    def delete_input(self):
+
+        if len(sval_list) > 0:
+            # Destrói os objetos
+            svar_list[-1].destroy()
+            sval_list[-1].destroy()
+            sinc_list[-1].destroy()
+
+            # Diminui o tamanho das listas
+            svar_list.pop(-1)
+            sval_list.pop(-1)
+            sinc_list.pop(-1)
+
     def createWidgets(self):
 
         self.titulo = tk.Label(self, text="Prop incerteza", font=('Courier', 15, 'bold'))
@@ -185,7 +198,12 @@ class Application(tk.Frame):
         self.add_input_btn = tk.Button(self, text="+", background='green', 
                                       command=self.create_input, fg='white', 
                                       relief='flat', padx=5, cursor='x_cursor')
-        self.add_input_btn.grid(column=1, row=39)
+        self.add_input_btn.grid(column=0, row=39)
+
+        self.del_input_btn = tk.Button(self,  text="-", background='red', 
+                                       command=self.delete_input, fg='black', 
+                                      relief='flat', padx=5, cursor='x_cursor')
+        self.del_input_btn.grid(column=2, row=39)
 
         self.var_text = tk.Label(self, text="Variável")
         self.var_text.grid(column=0, row=3)
