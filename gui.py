@@ -23,7 +23,6 @@ def calcular(equation, latex, **kwargs):
     - EQUAÇÃO -> equation
     - Latex -> latex
 
-    Os valores das listas são os *kwargs!
     - VALORES -> val_list
     - VARIÁVEIS -> var_list
     - INCERTEZAS -> inc_list
