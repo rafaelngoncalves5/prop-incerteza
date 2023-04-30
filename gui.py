@@ -92,21 +92,23 @@ class ResultWindow(tk.Frame):
         self.titulo_result = tk.Label(self, foreground='white', background='grey', text="Resultado", font=('Courier', 15, 'bold'))
         self.titulo_result.grid(column=1, row=0, pady=30)
 
-        self.show_result = tk.Label(self, text=str(self.result), font=('Courier', 12, 'bold'), 
+        self.show_result = tk.Label(self, text=str(self.result), 
                                     background='cyan', padx=20, pady=20)
         self.show_result.grid(column=1, row=1)
 
         self.titulo_latex = tk.Label(self, foreground='white', background='grey', text="Latex", font=('Courier', 15, 'bold'))
         self.titulo_latex.grid(column=1, row=2, pady=30)
 
-        self.show_latex = tk.Label(self, text=str(self.latex), font=('Courier', 12, 'bold'), 
+        self.show_latex = tk.Label(self, text=str(self.latex), 
                                     background='orange', padx=20, pady=20)
         self.show_latex.grid(column=1, row=3)
 
         self.titulo_dados = tk.Label(self, foreground='white', background='grey', text="Dados inseridos", font=('Courier', 15, 'bold')).grid(column=1, row=4, pady=30)
 
-        self.show_dados = tk.Text(self, text=str(f"Equação: {self.equacao}. Latex: {self.latex}. Valores: {self.valores}. Variáveis {self.variaveis}. Incertezas {self.incertezas}"), 
-                                    background='black', foreground='white', padx=20, pady=20).grid(column=1, row=5)
+        msg = f"Equação: {self.equacao}.\n\nLatex: {self.latex}.\n\nValores: {self.valores}.\n\nVariáveis {self.variaveis}.\n\nIncertezas {self.incertezas}"
+        
+        self.show_dados = tk.Label(self, text=msg, background='black', foreground='white')
+        self.show_dados.grid(column=1, row=5)
 
 count = 5
 
@@ -130,7 +132,7 @@ class Application(tk.Frame):
 
         elif self.val_input == None or self.val_input.get() == '' or self.val_input.get() == ' ' or  self.var_input == None or self.var_input.get() == '' or self.var_input.get() == ' ' or  self.inc_input == None or self.inc_input.get() == '' or self.inc_input.get() == ' ' :
             messagebox.showerror('Erro', "Dados inválidos, verifique os campos de 'Variáveis', 'Valores' e 'Incertezas'!")
-
+        
         else:
             # Insere na lista de variáveis
             var_list.append(self.var_input.get())
