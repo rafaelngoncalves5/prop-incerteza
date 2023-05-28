@@ -57,7 +57,7 @@ def calcular(equation, latex, **kwargs):
 
     # Abre a janela de resultado
     res_window = tk.Tk()
-    res_window.resizable(False, False)
+    res_window.resizable(True, True)
     result_window = ResultWindow(master=res_window, result=result, latex=latex_result, equacao=equation, valores=val_list, variaveis=var_list, incertezas=inc_list)
     result_window.master.title('Resultado')
     result_window.mainloop()
@@ -82,37 +82,37 @@ class ResultWindow(tk.Frame):
         self.valores = valores
         self.incertezas = incertezas
 
-        tk.Frame.__init__(self, master, background='grey') 
-        self.grid()
+        tk.Frame.__init__(self, master) 
+        self.pack(fill='both')
         self.createWidgets()
 
     def createWidgets(self):
 
-        self.titulo_result = tk.Label(self, foreground='white', background='grey', text="Resultado", font=('Courier', 15, 'bold'))
-        self.titulo_result.grid(column=1, row=0, pady=30)
+        self.titulo_result = tk.Label(self, text="Resultado", font=('Arial', 15, 'bold'))
+        self.titulo_result.pack(side='top', pady=15, fill='both')
 
         self.show_result = tk.Label(self, text=str(self.result), 
-                                    background='cyan', padx=20, pady=20)
-        self.show_result.grid(column=1, row=1)
+                                    background='#009ee3', padx=20, pady=30, foreground='white', font=('Arial', 20, 'bold'))
+        self.show_result.pack(side='top',pady=15, fill='both')
 
-        self.titulo_latex = tk.Label(self, foreground='white', background='grey', text="Latex", font=('Courier', 15, 'bold'))
-        self.titulo_latex.grid(column=1, row=2, pady=30)
+        self.titulo_latex = tk.Label(self, text="Latex", font=('Arial', 15, 'bold'))
+        self.titulo_latex.pack(side='top', pady=15, fill='both')
 
         self.show_latex = tk.Label(self, text=str(self.latex), 
-                                    background='orange', padx=20, pady=20)
-        self.show_latex.grid(column=1, row=3)
+                                    background='#009ee3', padx=20, pady=30, foreground='white', font=('Arial', 20, 'bold'))
+        self.show_latex.pack(pady=5, fill='both')
 
-        self.titulo_dados = tk.Label(self, foreground='white', background='grey', text="Dados inseridos", font=('Courier', 15, 'bold')).grid(column=1, row=4, pady=30)
+        self.titulo_dados = tk.Label(self, text="Dados inseridos", font=('Arial', 15, 'bold')).pack(fill='both', pady=15)
 
         msg = f"Equação: {self.equacao}.\n\nLatex: {self.latex}.\n\nValores: {self.valores}.\n\nVariáveis {self.variaveis}.\n\nIncertezas {self.incertezas}"
         
-        self.show_dados = tk.Label(self, text=msg, background='black', foreground='white')
-        self.show_dados.grid(column=1, row=5)
+        self.show_dados = tk.Label(self, text=msg)
+        self.show_dados.pack(fill='both', pady=18)
 
 count = 5
 
 window = tk.Tk()
-window.resizable(False, False)
+window.resizable(False, True)
 # window.geometry('400x500')
 
 class Application(tk.Frame):
@@ -169,13 +169,13 @@ class Application(tk.Frame):
         global count
         count += 1
          
-        self.var1 = tk.Entry(self, bd=5, cursor='pencil')
+        self.var1 = tk.Entry(self, bd=5, cursor='pencil', relief='groove')
         self.var1.grid(column=0, row=count, padx=20)
 
-        self.val1 = tk.Entry(self,bd=5, cursor='pencil')
+        self.val1 = tk.Entry(self,bd=5, cursor='pencil', relief='groove')
         self.val1.grid(column=1, row=count)
 
-        self.inc1 = tk.Entry(self,bd=5, cursor='pencil')
+        self.inc1 = tk.Entry(self,bd=5, cursor='pencil', relief='groove')
         self.inc1.grid(column=2, row=count)
 
         svar_list.append(self.var1)
@@ -197,7 +197,7 @@ class Application(tk.Frame):
 
     def createWidgets(self):
 
-        self.titulo = tk.Label(self, text="Prop incerteza", font=('Courier', 15, 'bold'))
+        self.titulo = tk.Label(self, text="Prop incerteza", font=('Arial', 15, 'bold'))
         self.titulo.grid(column=1, row=0, pady=30)
 
         self.info_icon = tk.Button(
@@ -206,42 +206,42 @@ class Application(tk.Frame):
             relief='flat', font=('Helvetica', 12, 'bold', 'underline'), cursor='x_cursor'
         ).grid(column=2, row=0)
 
-        self.latex_titulo = tk.Label(self, text="Latex", font=('Courier', 12)).grid(column=2, row=1)
-        self.latex = tk.Entry(self, bd=5, cursor='pencil')
+        self.latex_titulo = tk.Label(self, text="Latex", font=('Arial', 12)).grid(column=2, row=1)
+        self.latex = tk.Entry(self, bd=5, cursor='pencil', relief='groove')
         self.latex.grid(column=2, row=2)
 
-        self.eq_text = tk.Label(self, text="Equação", font=('Courier', 12)).grid(column=1, row=1)
-        self.eq_input = tk.Entry(self, bd=5, cursor='pencil')
+        self.eq_text = tk.Label(self, text="Equação", font=('Arial', 12)).grid(column=1, row=1)
+        self.eq_input = tk.Entry(self, bd=5, cursor='pencil', relief='groove')
         self.eq_input.grid(column=1, row=2)
 
         self.add_input_btn = tk.Button(self, text="+", background='green', 
-                                      command=self.create_input, fg='white', 
-                                      relief='flat', padx=5, cursor='x_cursor')
+                                      command=self.create_input, fg='black', 
+                                      relief='solid', padx=5, cursor='x_cursor')
         self.add_input_btn.grid(column=0, row=39)
 
         self.del_input_btn = tk.Button(self,  text="-", background='red', 
                                        command=self.delete_input, fg='black', 
-                                      relief='flat', padx=5, cursor='x_cursor')
+                                      relief='solid', padx=5, cursor='x_cursor')
         self.del_input_btn.grid(column=2, row=39)
 
         self.var_text = tk.Label(self, text="Variável")
         self.var_text.grid(column=0, row=3)
-        self.var_input = tk.Entry(self, bd=5, cursor='pencil')
+        self.var_input = tk.Entry(self, bd=5, cursor='pencil', relief='groove')
         self.var_input.grid(column=0, row=4, padx=20)
 
         self.val_text = tk.Label(self, text="Valor")
         self.val_text.grid(column=1, row=3)
-        self.val_input = tk.Entry(self, bd=5, cursor='pencil')
+        self.val_input = tk.Entry(self, bd=5, cursor='pencil', relief='groove')
         self.val_input.grid(column=1, row=4, padx=20)
         
         self.inc_text = tk.Label(self, text="Incerteza")
         self.inc_text.grid(column=2, row=3)
-        self.inc_input = tk.Entry(self, bd=5, cursor='pencil')
+        self.inc_input = tk.Entry(self, bd=5, cursor='pencil', relief='groove')
         self.inc_input.grid(column=2, row=4, padx=20)
 
-        self.calcular_btn = tk.Button(self, text="Calcular", background='blue', 
-                                      command=self.main, font=("Courier", 16, 'bold'), fg='white', 
-                                      relief='raised', cursor='x_cursor')
+        self.calcular_btn = tk.Button(self, foreground='white', text="Calcular", background='#009ee3', 
+                                      command=self.main, font=("Arial", 16, 'bold'), fg='white', 
+                                      relief='flat', cursor='x_cursor', padx=20)
         self.calcular_btn.grid(column=1, row=40, pady=40)
 
 app = Application()  
